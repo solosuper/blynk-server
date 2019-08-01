@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+touch ${PWD}/server.properties
+
+docker run \
+  -d \
+  --name blynk \
+  -p 9443:9443 \
+  --restart always \
+  -v ${PWD}/data:/data \
+  -v ${PWD}/server.properties:/config/server.properties \
+  solosuper/blynk-server:latest
+
