@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+readonly SCRIPT_DIR="$(dirname "$(readlink -f "${0}")")"
+
+touch ${SCRIPT_DIR}/server.properties
+
+docker run \
+  --detach \
+  --name blynk \
+  --network host \
+  --restart always \
+  --volume ${SCRIPT_DIR}/data:/data \
+  --volume ${SCRIPT_DIR}/server.properties:/config/server.properties \
+  solosuper/blynk-server:latest
+
